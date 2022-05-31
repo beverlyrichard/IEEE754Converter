@@ -36,19 +36,8 @@ namespace IEEE754Converter{
                 double deci = Math.Abs(((int) result) - result);
                 int[] mantissa = convertDecimalToBinary(deci);
 
-                // now convert arrays to strings with StringBuilder
-                StringBuilder expsb = new StringBuilder();
-                for(int j = 0; j < exponentBinary.Length; j++){
-                    expsb.Append(exponentBinary[j]);
-                }
-                StringBuilder mansb = new StringBuilder();
-                for(int j = 0; j < mantissa.Length; j++){
-                    mansb.Append(mantissa[j]);
-                }
-
-                // maybe create a method that builds the output
-
-                string output = signBit + " | " + expsb.ToString() + " | " + mansb.ToString();
+               
+                string output = generateOutput(signBit, exponentBinary, mantissa);
                 return output;
             }
             else {      // number is greater than one
@@ -81,16 +70,8 @@ namespace IEEE754Converter{
                     mantissa[i] = wholeNumBinary[offset];
                     offset++;
                 }
-                StringBuilder expsb = new StringBuilder();
-                for(int i = 0; i < exponentBinary.Length; i++){
-                    expsb.Append(exponentBinary[i]);
-                }
-                StringBuilder mansb = new StringBuilder();
-                for(int i = 0; i < mantissa.Length; i++){
-                    mansb.Append(mantissa[i]);
-                }
 
-                String output = signBit + " | " + expsb.ToString() + " | " + mansb.ToString();
+                string output = generateOutput(signBit, exponentBinary, mantissa);
                 return output;
             }
         }
@@ -156,6 +137,20 @@ namespace IEEE754Converter{
             }
 
             return exponent;
+        }
+        public static string generateOutput(int signBit, int[] exponentBinary, int[] mantissa){
+            StringBuilder expsb = new StringBuilder();
+            for(int i = 0; i < exponentBinary.Length; i++){
+                expsb.Append(exponentBinary[i]);
+            }
+
+            StringBuilder mansb = new StringBuilder();
+            for(int i = 0; i < mantissa.Length; i++){
+                mansb.Append(mantissa[i]);
+            }
+
+            string retVal = signBit + " | " + expsb.ToString() + " | " + mansb.ToString();
+            return retVal;
         }
     }
 }
